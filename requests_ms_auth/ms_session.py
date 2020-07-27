@@ -8,6 +8,7 @@ import requests
 import requests_oauthlib
 import simplejson
 from requests.structures import CaseInsensitiveDict
+from urllib3.exceptions import NewConnectionError
 
 from requests_ms_auth.ms_backend_application_client import MsBackendApplicationClient
 from requests_ms_auth.ms_session_config import MsSessionConfig
@@ -222,7 +223,7 @@ class MsRequestsSession(requests_oauthlib.OAuth2Session):
             logging.debug(f"Response head follows: -----------------------")
             logging.debug(response.content[0:200])
             return response
-        except requests.exceptions.NewConnectionError as e:
+        except NewConnectionError as e:
             logger.error(f"Could not connect (method={request.method}, url='{request.url}'): {e}")
             raise e
         except requests.exceptions.HTTPError as e:
