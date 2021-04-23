@@ -9,3 +9,4 @@ pip-tools==4.*
 black
 mock==3.*
 PyYAML==5.*
+safety==1.*

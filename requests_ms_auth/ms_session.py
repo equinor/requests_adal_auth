@@ -15,6 +15,8 @@ from requests_ms_auth.ms_session_config import MsSessionConfig
 
 logger = logging.getLogger(__name__)
 
+DEFAULT_REQUEST_TIMEOUT = 300  # How long to wait for the server to send data before giving up. As a float (in seconds).
+
 
 class MsRequestsSession(requests_oauthlib.OAuth2Session):
     """A wrapper for OAuth2Session that also implements adal/msal token fetch.
@@ -179,6 +181,8 @@ class MsRequestsSession(requests_oauthlib.OAuth2Session):
     ):
         """This method will be called each time smth should be sent
 
+        Add default 'timeout' if no was specified.
+
         Notes:
             if 'sent' method will be called directly, this method will be invoked if there's no 'token' in the headers
             'access token' validity will be checked/renewed as well
@@ -188,6 +192,9 @@ class MsRequestsSession(requests_oauthlib.OAuth2Session):
         headers = self.add_auto_headers(headers)
 
         self.access_token_check_and_renew(headers)
+
+        if kwargs.get("timeout", None) is None:
+            kwargs["timeout"] = DEFAULT_REQUEST_TIMEOUT
 
         return super(MsRequestsSession, self).request(
             method=method,

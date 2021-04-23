@@ -42,8 +42,8 @@ prep:
 	pip install --upgrade pip
 	pip uninstall requests_ms_auth -y
 	pip install --upgrade pip-tools wheel twine
-	pip install -r requirements/test_requirements.in
-	pip install -r requirements/requirements.in
+	pip install -r requirements/test_requirements.txt
+	pip install -r requirements/requirements.txt
 
 build:
 	@echo "Building"
@@ -67,11 +67,14 @@ setup:
 	pip uninstall -y requests_ms_auth
 	pip install -e .
 
-code-quality: black flake mypy
+code-quality: black flake mypy safety-check
 
 test:
 	@echo "Testing"
 	python -m pytest --cov=requests_ms_auth -vv ${TESTS_DIR}
+
+safety-check:
+	safety check --full-report
 
 pack:
 	@echo "Packaging"
@@ -97,6 +100,7 @@ help:
 	@echo " + make code-quality     		Run code quality tools"
 	@echo " + make build            		Build the package."
 	@echo " + make test             		Run tests."
+	@echo " + make safety-check         	Check safety of the packages."
 	@echo " + make pack             		Package the build into a PyPi package"
 	@echo " + make push             		Push the package to PyPi"
 	@echo ""
