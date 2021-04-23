@@ -67,11 +67,14 @@ setup:
 	pip uninstall -y requests_ms_auth
 	pip install -e .
 
-code-quality: black flake mypy
+code-quality: black flake mypy safety-check
 
 test:
 	@echo "Testing"
 	python -m pytest --cov=requests_ms_auth -vv ${TESTS_DIR}
+
+safety-check:
+	safety check --full-report
 
 pack:
 	@echo "Packaging"
