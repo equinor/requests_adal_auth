@@ -100,6 +100,7 @@ help:
 	@echo " + make code-quality     		Run code quality tools"
 	@echo " + make build            		Build the package."
 	@echo " + make test             		Run tests."
+	@echo " + make safety-check         	Check safety of the packages."
 	@echo " + make pack             		Package the build into a PyPi package"
 	@echo " + make push             		Push the package to PyPi"
 	@echo ""
