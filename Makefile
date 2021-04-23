@@ -42,8 +42,8 @@ prep:
 	pip install --upgrade pip
 	pip uninstall requests_ms_auth -y
 	pip install --upgrade pip-tools wheel twine
-	pip install -r requirements/test_requirements.in
-	pip install -r requirements/requirements.in
+	pip install -r requirements/test_requirements.txt
+	pip install -r requirements/requirements.txt
 
 build:
 	@echo "Building"
